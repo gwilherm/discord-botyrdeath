@@ -132,13 +132,13 @@ def play():
 
 @bot.event
 async def on_ready():
-    channel = bot.get_channel(int(TEXT_CHANNEL.strip()))
+    text_channel = bot.get_channel(int(TEXT_CHANNEL.strip()))
     voice_channel = bot.get_channel(int(VOICE_CHANNEL.strip()))
-    print(f"Found channel: {channel.name}, {channel.id}")
+    print(f"Found channel: {text_channel.name}, {text_channel.id}")
     print(f"Found voice channel: {voice_channel.name}, {voice_channel.id}")
-    await channel.send(f'Bonjour @everyone, je vais vous jouer ma dernière composition !\n'
+    await text_channel.send(f'Bonjour @everyone, je vais vous jouer ma dernière composition !\n'
                        f'Rendez-vous sur #{voice_channel.name} !')
-    if channel is None or voice_channel is None:
+    if text_channel is None or voice_channel is None:
         exit
     voice_client = await voice_channel.connect()
     src = discord.FFmpegPCMAudio(bot.midiserver.stdout, pipe=True)
