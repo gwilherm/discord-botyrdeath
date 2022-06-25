@@ -163,7 +163,7 @@ async def quit(context):
         if bot.midiserver is not None:
             bot.midiserver.terminate()
         await context.channel.send('Bye.')
-        await bot.logout()
+        await bot.close()
     else:
         print(f'Member {context.author.name} not allowed to run this command.')
 
