@@ -1,0 +1,4 @@
+discord
+mido
+python-rtmidi
+pynacl
