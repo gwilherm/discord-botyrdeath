@@ -112,10 +112,10 @@ def compose_masterpiece(pattern):
     return mid
 
 def play():
-    t = threading.currentThread()
+    t = threading.current_thread()
     output_names = [pn for pn in mido.get_output_names() if 'port 0' in pn]
     print(f'Available ports: {output_names}')
-    outport = mido.open_output(output_names[1])
+    outport = mido.open_output(output_names[0])
 
     t.mid = compose_masterpiece(getattr(t, "pattern"))
 
