@@ -30,7 +30,7 @@ Create a text channel and a voice channel (you can keep the default 'general' ch
 
 By right-click, copy the channels id and paste it into the `botyrdeath.sh` script.
 
-## Instal dependencies
+## Install dependencies
 
 ### Software and libraries
 
