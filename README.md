@@ -1,6 +1,6 @@
 # discord-botyrdeath
 
-A Discord bot that plays brutal midi on voice channel.
+A Discord bot that plays brutal midi on voice channel using discordpy, timidity, python-rtmidi and mido.
 
 ## Creating a Bot Account
 
@@ -28,7 +28,7 @@ Vistit the generated link to invite the bot to your discord server.
 
 Create a text channel and a voice channel (you can keep the default 'general' channels).
 
-With right-click, copy the channels id and paste it into the `botyrdeath.sh` script.
+By right-click, copy the channels id and paste it into the `botyrdeath.sh` script.
 
 ## Instal dependencies
 
@@ -56,7 +56,7 @@ In the text channel use the following commands to control the bot :
 !pattern <chord1> <chord2> <chord3> <chord4>
 ```
 
-Chords from C1 to B9.
+Chords goes from C1 to B9.
 
 ### Instert a bell-break
 
@@ -64,7 +64,7 @@ Chords from C1 to B9.
 !break
 ```
 
-### Shutdown the bot (only available for users in BotryAdmin role)
+### Shutdown the bot (only available for users in BotyrAdmin role)
 
 ```
 !quit
