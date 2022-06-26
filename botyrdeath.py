@@ -136,8 +136,8 @@ async def on_ready():
     voice_channel = bot.get_channel(int(VOICE_CHANNEL.strip()))
     print(f"Found channel: {text_channel.name}, {text_channel.id}")
     print(f"Found voice channel: {voice_channel.name}, {voice_channel.id}")
-    await text_channel.send(f'Bonjour @everyone, je vais vous jouer ma dernière composition !\n'
-                       f'Rendez-vous sur <#{voice_channel.id}> !')
+    await text_channel.send(f'Hi @everyone, let me introduce you to my new masterpiece !\n'
+                       f'Come to the <#{voice_channel.id}> voice channel !')
     if text_channel is None or voice_channel is None:
         exit
     voice_client = await voice_channel.connect()
