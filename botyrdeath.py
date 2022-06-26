@@ -4,8 +4,8 @@
 import os
 import asyncio
 import discord
+from discord.ext import commands
 import subprocess
-import discord.ext.commands
 import mido
 from mido import Message, MidiFile, MidiTrack
 import time
@@ -16,7 +16,16 @@ ADMIN_ROLE = "BotyrAdmin"
 TEXT_CHANNEL  = os.environ['TEXT_CHANNEL']
 VOICE_CHANNEL = os.environ['VOICE_CHANNEL']
 
-bot = discord.ext.commands.Bot(command_prefix='!') #discord.Client()
+# Change only the no_category default string
+help_command = commands.DefaultHelpCommand(
+    no_category = 'Commands'
+)
+
+bot = commands.Bot(
+    command_prefix='!',
+    description='BotyrDeath Bot',
+    help_command = help_command
+)
 
 bot.midiserver = subprocess.Popen(['timidity', '-iA', '-Ow', '-o', '-'], stdout=subprocess.PIPE)
 bot.midiclient = None
@@ -152,7 +161,7 @@ async def on_ready():
     bot.midiclient.start()                                  # Start the execution
     bot.midiclient.pattern = ('E3', 'C3', 'C#3', 'C3')
 
-@bot.command()
+@bot.command(help='Disconnect the bot.')
 async def quit(context):
     print('Handle quit')
     if ADMIN_ROLE in list(map(lambda r: r.name, context.author.roles)):
@@ -167,7 +176,7 @@ async def quit(context):
     else:
         print(f'Member {context.author.name} not allowed to run this command.')
 
-@bot.command()
+@bot.command(usage='[<chord1> <chord2> <chord3> <chord4>]\n\n* Using the command without arguments displays the current pattern.\n* A chord goes from C1 to B9.', help='Display or change the masterpiece chords.')
 async def pattern(context, *args):
     print(f'Handle pattern: {args}')
     if len(args) == 0:
@@ -186,7 +195,7 @@ async def pattern(context, *args):
         bot.midiclient.pattern = args
         bot.midiclient.mid = compose_masterpiece(args)
 
-@bot.command(name='break')
+@bot.command(name='break', help='Insert a bell-break to the masterpiece.')
 async def do_break(context, *args):
     print(f'Handle do_break: {args}')
     bot.midiclient.do_break = True
