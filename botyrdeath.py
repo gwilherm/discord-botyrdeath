@@ -10,6 +10,7 @@ import mido
 from mido import Message, MidiFile, MidiTrack
 import time
 import threading
+import logging
 
 ADMIN_ROLE = "BotyrAdmin"
 
@@ -123,7 +124,7 @@ def compose_masterpiece(pattern):
 def play():
     t = threading.current_thread()
     output_names = [pn for pn in mido.get_output_names() if 'port 0' in pn]
-    print(f'Available ports: {output_names}')
+    logging.info(f'Available ports: {output_names}')
     outport = mido.open_output(output_names[0])
 
     t.mid = compose_masterpiece(getattr(t, "pattern"))
@@ -143,8 +144,8 @@ def play():
 async def on_ready():
     text_channel = bot.get_channel(int(TEXT_CHANNEL.strip()))
     voice_channel = bot.get_channel(int(VOICE_CHANNEL.strip()))
-    print(f"Found channel: {text_channel.name}, {text_channel.id}")
-    print(f"Found voice channel: {voice_channel.name}, {voice_channel.id}")
+    logging.info(f"Found channel: {text_channel.name}, {text_channel.id}")
+    logging.info(f"Found voice channel: {voice_channel.name}, {voice_channel.id}")
     await text_channel.send(f'Hi @everyone, let me introduce you to my new masterpiece !\n'
                        f'Come to the <#{voice_channel.id}> voice channel !')
     if text_channel is None or voice_channel is None:
@@ -163,7 +164,7 @@ async def on_ready():
 
 @bot.command(help='Disconnect the bot.')
 async def quit(context):
-    print('Handle quit')
+    logging.info('Handle quit')
     if ADMIN_ROLE in list(map(lambda r: r.name, context.author.roles)):
         if bot.midiclient is not None:
             bot.midiclient.do_run = False
@@ -174,11 +175,11 @@ async def quit(context):
         await context.channel.send('Bye.')
         await bot.close()
     else:
-        print(f'Member {context.author.name} not allowed to run this command.')
+        logging.warn(f'Member {context.author.name} not allowed to run this command.')
 
 @bot.command(usage='[<chord1> <chord2> <chord3> <chord4>]\n\n* Using the command without arguments displays the current pattern.\n* A chord goes from C1 to B9.', help='Display or change the masterpiece chords.')
 async def pattern(context, *args):
-    print(f'Handle pattern: {args}')
+    logging.info(f'Handle pattern: {args}')
     if len(args) == 0:
         currentPattern = ' '.join(bot.midiclient.pattern)
         await context.send(f'Current pattern is: `{currentPattern}`')
@@ -197,7 +198,7 @@ async def pattern(context, *args):
 
 @bot.command(name='break', help='Insert a bell-break to the masterpiece.')
 async def do_break(context, *args):
-    print(f'Handle do_break: {args}')
+    logging.info(f'Handle do_break: {args}')
     bot.midiclient.do_break = True
 
 @bot.event
